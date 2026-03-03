@@ -11,7 +11,7 @@ import os
 import ssl
 
 app = Flask(__name__)
-api = Api(app)
+#api = Api(app)
 
 base_dir = os.path.abspath(os.path.dirname(__file__))
 cert_path = os.path.join(base_dir, 'server.crt')
@@ -21,8 +21,10 @@ key_path = os.path.join(base_dir, 'server.key')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jwtdatabase.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'super-secret'  # Cambia esto por una clave secreta segura en producción
-db = SQLAlchemy(app)
+
+db = init_app(app)
 jwt = JWTManager(app)
+api = Api(app)
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -67,9 +69,11 @@ class Register(Resource):
 		
 		if User.query.filter_by(username=username).first():
 			return {'error': {'username': 'Username already exists.'}}, HTTPStatus.BAD_REQUEST
+
+		role = 'admin' if User.query.count() == 0 else 'user'
 		
 		hashed_password = generate_password_hash(password)
-		new_user = User(username=username, password=hashed_password)
+		new_user = User(username=username, password=hashed_password, role=role)
 		db.session.add(new_user)
 		db.session.commit()
 		
