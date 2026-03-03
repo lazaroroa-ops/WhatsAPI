@@ -3,12 +3,27 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import db, User, Mail
 
+def validate_api_key():
+    api_key = request.headers.get('X-API-KEY')
+    if not api_key:
+        return False, {"message": "API Key is missing"}, 401
+    user = User.query.filter_by(api_key=api_key).first()
+    if not user:
+        return False, {"message": "Invalid API Key"}, 401
 
+    #esto igual no hace falta, se puede borrar creo, es basicamente comprobar que el user del apikey y el token son el mismo
+    current_user_username = get_jwt_identity()
+    if user.username != current_user_username:
+        return False, {"message": "JWT and API Key mismatch"}, 403
+    return True, user, 200
 
 class MailResource(Resource):
     @jwt_required()
     def post(self):
-        #Posiblemente añadir api key para confirmar user
+        valid, auth_user_or_err, code = validate_api_key()
+        if not valid:
+            return auth_user_or_err, code
+
         data = request.get_json()
         receiver_username = data.get('receiver')
         subject = data.get('subject')
@@ -32,6 +47,10 @@ class MailResource(Resource):
 
     @jwt_required()
     def get(self):
+        valid, auth_user_or_err, code = validate_api_key()
+        if not valid:
+            return auth_user_or_err, code
+
         username = get_jwt_identity()
         user = User.query.filter_by(username=username).first()
         
@@ -42,6 +61,10 @@ class MailResource(Resource):
 class MailDetailResource(Resource):
     @jwt_required()
     def get(self, mail_id):
+        valid, auth_user_or_err, code = validate_api_key()
+        if not valid:
+            return auth_user_or_err, code
+
         username = get_jwt_identity()
         user = User.query.filter_by(username=username).first()
         
@@ -57,6 +80,10 @@ class MailDetailResource(Resource):
 
     @jwt_required()
     def delete(self, mail_id):
+        valid, auth_user_or_err, code = validate_api_key()
+        if not valid:
+            return auth_user_or_err, code
+            
         username = get_jwt_identity()
         user = User.query.filter_by(username=username).first()
         
