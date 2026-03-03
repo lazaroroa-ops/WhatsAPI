@@ -10,7 +10,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     role = db.Column(db.String(20), default='user')
-    #api_key = db.Column(db.String(64), unique=True, nullable=True)
+    #Api key ??
 
     def __repr__(self):
         return f'<User {self.username}>'

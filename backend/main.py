@@ -11,9 +11,10 @@ import os
 import ssl
 
 from models import db, User, Message
+from resources import MessageResource,MessageDetailResource
 
 app = Flask(__name__)
-#api = Api(app)
+
 
 base_dir = os.path.abspath(os.path.dirname(__file__))
 cert_path = os.path.join(base_dir, 'server.crt')
@@ -99,6 +100,8 @@ class ProtectedResource(Resource):
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
+api.add_resource(MessageResource, '/messages')
+api.add_resource(MessageDetailResource, '/messages/<int:message_id>')
 
 api.add_resource(ProtectedResource, '/protected')
 
