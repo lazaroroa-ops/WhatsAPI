@@ -1,12 +1,16 @@
+import os
 import curses
 import curses.textpad as textpad
 
 from loginWindow import LoginWindow
 from registerWindow import RegisterWindow
+from mainWindow import MainWindow
 
-JWT = None
+os.environ.setdefault('ESCDELAY', '25')
+
 
 def main(stdscr):
+	JWT = None
 	curses.use_default_colors()
 	curses.init_pair(1, curses.COLOR_RED, -1)
 	curses.curs_set(0)
@@ -25,6 +29,9 @@ def main(stdscr):
 			code, JWT = active_win.loop()
 		elif code == "Register":
 			active_win = RegisterWindow(stdscr)
+			code, JWT = active_win.loop()
+		elif code == "Main":
+			active_win = MainWindow(stdscr, JWT)
 			code = active_win.loop()
 
 		active_win.window.erase()
