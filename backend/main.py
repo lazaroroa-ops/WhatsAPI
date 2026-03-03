@@ -11,7 +11,7 @@ import os
 import ssl
 
 from models import db, User, Message
-from resources import MessageResource,MessageDetailResource
+from resources import MessageResource,MessageDetailResource, ChangePassResource, DeleteAccountResource
 
 app = Flask(__name__)
 
@@ -92,18 +92,12 @@ class Login(Resource):
 		return {'access_token': create_access_token(identity=username)}, HTTPStatus.OK
 
 
-class ProtectedResource(Resource):
-	@jwt_required()
-	def get(self):
-		current_user = get_jwt_identity()
-		return {'message': f'Hello, {current_user}'}, 200
-
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(MessageResource, '/messages')
 api.add_resource(MessageDetailResource, '/messages/<int:message_id>')
-
-api.add_resource(ProtectedResource, '/protected')
+api.add_resource(ChangePassResource, '/change-pass')
+api.add_resource(DeleteAccountResource, '/del-account')
 
 
 if __name__ == '__main__':

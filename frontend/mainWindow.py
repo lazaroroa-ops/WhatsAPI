@@ -3,14 +3,18 @@ import curses.textpad as textpad
 import time
 
 import requests
+from requests.auth import HTTPBasicAuth
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 JWT = None
+API_KEY = None
 
 class MainWindow():
+	#def __init__(self, stdscr, JWT_, API_KEY_):
 	def __init__(self, stdscr, JWT_):
-		global JWT
+		global JWT, API_KEY
 		JWT = JWT_
+		#API_KEY = API_KEY_
 		self.stdscr = stdscr
 		parent_height, parent_width = self.stdscr.getmaxyx()
 		self.height = parent_height
@@ -147,6 +151,15 @@ class InboxWindow():
 
 	def fetch_mails(self):
 		#debug
+		response = requests.get(
+			"https://localhost:5000/messages",
+			headers={
+				'Authorization': f'Bearer {JWT}1',
+				#'Api-Key': API_KEY,
+				'Content-type': 'aplication/json'
+			},
+			verify=False
+		)
 		self.mail = [
 			{"id": 1, "source": "test@test.es", "subject": "This is a test."},
 			{"id": 2, "source": "alberto@gmail.com", "subject": "This is another test."}
