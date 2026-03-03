@@ -10,8 +10,8 @@ from http import HTTPStatus
 import os
 import ssl
 
-from models import db, User, Message
-from resources import MessageResource,MessageDetailResource
+from models import db, User, Mail
+from resources import MailResource,MailDetailResource
 
 app = Flask(__name__)
 
@@ -100,8 +100,8 @@ class ProtectedResource(Resource):
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
-api.add_resource(MessageResource, '/messages')
-api.add_resource(MessageDetailResource, '/messages/<int:message_id>')
+api.add_resource(MailResource, '/mail')
+api.add_resource(MailDetailResource, '/mail/<int:mail_id>')
 
 api.add_resource(ProtectedResource, '/protected')
 
