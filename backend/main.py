@@ -11,6 +11,7 @@ import os
 import ssl
 import uuid
 import hashlib
+import logging
 
 from models import db, User, Mail
 from resources import MailResource,MailDetailResource
@@ -33,6 +34,12 @@ jwt = JWTManager(app)
 api = Api(app)
 
 # Se ha pasado a modelo el user
+logging.basicConfig(
+    filename='audit.log',
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s'
+)
+
 ### USER REGISTER VALIDATION ###
 
 def validate_complexity(password):
@@ -75,7 +82,8 @@ class Register(Resource):
 		new_user = User(username=username, password=hashed_password, role=role, api_key=api_key)
 		db.session.add(new_user)
 		db.session.commit()
-		
+
+		logging.info(f"New user registered: {username}")
 		return {'message': 'User registered successfully.', 'api_key': api_key}, HTTPStatus.CREATED
 
 
@@ -86,10 +94,12 @@ class Login(Resource):
 		password = data.get('password')
 		
 		if not username or not password:
+			logging.warning(f"Failed login attempt, no username or password")
 			return {'error': 'Username and password are required.'}, HTTPStatus.BAD_REQUEST
 		
 		user = User.query.filter_by(username=username).first()
 		if not user or not check_password_hash(user.password, password):
+			logging.warning(f"Failed login attempt for: {user.username}")
 			return {'error': 'Invalid username or password.'}, HTTPStatus.UNAUTHORIZED
 		
 		return {'access_token': create_access_token(identity=username), 'api_key': user.api_key}, HTTPStatus.OK

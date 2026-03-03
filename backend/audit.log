@@ -1,0 +1,21 @@
+2026-03-03 21:37:12,771 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-03 21:37:12,771 INFO: [33mPress CTRL+C to quit[0m
+2026-03-03 21:37:12,773 INFO:  * Restarting with stat
+2026-03-03 21:37:13,718 WARNING:  * Debugger is active!
+2026-03-03 21:37:13,723 INFO:  * Debugger PIN: 730-585-599
+2026-03-03 21:38:04,436 INFO: 127.0.0.1 - - [03/Mar/2026 21:38:04] "POST /login HTTP/1.1" 200 -
+2026-03-03 21:39:52,281 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-03 21:39:52,282 INFO: [33mPress CTRL+C to quit[0m
+2026-03-03 21:39:52,284 INFO:  * Restarting with stat
+2026-03-03 21:39:53,163 WARNING:  * Debugger is active!
+2026-03-03 21:39:53,171 INFO:  * Debugger PIN: 730-585-599
+2026-03-03 21:39:57,221 INFO: New user registered: user3@example.com
+2026-03-03 21:39:57,222 INFO: 127.0.0.1 - - [03/Mar/2026 21:39:57] "[35m[1mPOST /register HTTP/1.1[0m" 201 -
+2026-03-03 21:40:06,775 INFO: 127.0.0.1 - - [03/Mar/2026 21:40:06] "POST /login HTTP/1.1" 200 -
+2026-03-03 21:40:34,618 INFO: 127.0.0.1 - - [03/Mar/2026 21:40:34] "[33mPOST /mail HTTP/1.1[0m" 404 -
+2026-03-03 21:40:44,675 INFO: 127.0.0.1 - - [03/Mar/2026 21:40:44] "[35m[1mPOST /mail HTTP/1.1[0m" 201 -
+2026-03-03 21:40:54,491 INFO: 127.0.0.1 - - [03/Mar/2026 21:40:54] "POST /login HTTP/1.1" 200 -
+2026-03-03 21:41:03,750 INFO: 127.0.0.1 - - [03/Mar/2026 21:41:03] "GET /mail/1 HTTP/1.1" 200 -
+2026-03-03 21:41:44,269 INFO: 127.0.0.1 - - [03/Mar/2026 21:41:44] "GET /mail HTTP/1.1" 200 -
