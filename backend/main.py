@@ -9,6 +9,8 @@ from http import HTTPStatus
 
 import os
 import ssl
+import uuid
+import hashlib
 
 from models import db, User, Mail
 from resources import MailResource,MailDetailResource
@@ -67,13 +69,14 @@ class Register(Resource):
 			return {'error': {'username': 'Username already exists.'}}, HTTPStatus.BAD_REQUEST
 
 		role = 'admin' if User.query.count() == 0 else 'user'
+		api_key = hashlib.sha256(str(uuid.uuid4()).encode()).hexdigest()
 		
 		hashed_password = generate_password_hash(password)
-		new_user = User(username=username, password=hashed_password, role=role)
+		new_user = User(username=username, password=hashed_password, role=role, api_key=api_key)
 		db.session.add(new_user)
 		db.session.commit()
 		
-		return {'message': 'User registered successfully.'}, HTTPStatus.CREATED
+		return {'message': 'User registered successfully.', 'api_key': api_key}, HTTPStatus.CREATED
 
 
 class Login(Resource):
@@ -89,7 +92,7 @@ class Login(Resource):
 		if not user or not check_password_hash(user.password, password):
 			return {'error': 'Invalid username or password.'}, HTTPStatus.UNAUTHORIZED
 		
-		return {'access_token': create_access_token(identity=username)}, HTTPStatus.OK
+		return {'access_token': create_access_token(identity=username), 'api_key': user.api_key}, HTTPStatus.OK
 
 
 class ProtectedResource(Resource):
