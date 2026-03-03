@@ -58,7 +58,7 @@ class RegisterWindow():
 								},
 								verify=False
 							)
-							return "Main", response.json()["access_token"]
+							return "Main", response.json()["access_token"], response.json()["api_key"]
 						else:
 							self.window.attron(curses.color_pair(1))
 							error_msg = list(response.json()["error"].values())[0]
@@ -68,10 +68,10 @@ class RegisterWindow():
 							self.window.attroff(curses.color_pair(1))
 
 					elif self.focused == 3:
-						return "Login", None
+						return "Login", None, None
 					
 					elif self.focused == 4:
-						return "Exit", None
+						return "Exit", None, None
 
 				elif key == curses.KEY_DOWN:
 					self.focused = min(self.focused + 1, 4)

@@ -10,11 +10,10 @@ JWT = None
 API_KEY = None
 
 class MainWindow():
-	#def __init__(self, stdscr, JWT_, API_KEY_):
-	def __init__(self, stdscr, JWT_):
+	def __init__(self, stdscr, JWT_, API_KEY_):
 		global JWT, API_KEY
 		JWT = JWT_
-		#API_KEY = API_KEY_
+		API_KEY = API_KEY_
 		self.stdscr = stdscr
 		parent_height, parent_width = self.stdscr.getmaxyx()
 		self.height = parent_height
@@ -150,83 +149,91 @@ class InboxWindow():
 		self.focused = 0
 
 	def fetch_mails(self):
-		#debug
 		response = requests.get(
-			"https://localhost:5000/messages",
+			"https://localhost:5000/mail",
 			headers={
-				'Authorization': f'Bearer {JWT}1',
+				'Authorization': f'Bearer {JWT}',
 				#'Api-Key': API_KEY,
-				'Content-type': 'aplication/json'
 			},
 			verify=False
 		)
-		self.mail = [
-			{"id": 1, "source": "test@test.es", "subject": "This is a test."},
-			{"id": 2, "source": "alberto@gmail.com", "subject": "This is another test."}
-		]
+		if response.status_code == 200:
+			self.mail = response.json()["message"]
 
-		# FETCH MAIL
-		if self.mail:
-			self.window.addnstr(2, 2, "Source", 30)
-			self.window.addnstr(2, 34, "Subject", self.width - 36)
+			# FETCH MAIL
+			if self.mail:
+				self.window.addnstr(2, 2, "Source", 30)
+				self.window.addnstr(2, 34, "Subject", self.width - 36)
 
-			self.window.addstr(3, 2, f"{"=" * 30}")
-			self.window.addstr(3, 34, f"{"=" * (self.width - 36)}")
+				self.window.addstr(3, 2, f"{"=" * 30}")
+				self.window.addstr(3, 34, f"{"=" * (self.width - 36)}")
 
-			for m, row in zip(self.mail, range(5, 5 + 2 * len(self.mail), 2)):
-				self.window.addnstr(row, 2, m["source"], 30)
-				self.window.addnstr(row, 34, m["subject"], self.width - 36)
+				for m, row in zip(self.mail, range(5, 5 + 2 * len(self.mail), 2)):
+					self.window.addnstr(row, 2, m["source"], 30)
+					self.window.addnstr(row, 34, m["subject"], self.width - 36)
 
-		# if not mail
+			# if not mail
+			else:
+				self.window.addstr(int(self.height / 2), int(self.width / 2 - len("Wow, such empty") / 2), "Wow, such empty")
+			
+			self.window.refresh()
 		else:
-			self.window.addstr(int(self.height / 2), int(self.width / 2 - len("Wow, such empty") / 2), "Wow, such empty")
-		
-		self.window.refresh()
+			self.window.attron(curses.color_pair(1))
+			self.window.addstr(int(self.height / 2), int(self.width / 2 - len("An error has ocurred") / 2), "An error has ocurred")
+			self.window.attroff(curses.color_pair(1))
 
 	def fetch_mail(self, id):
 		# debug
-		mail = {
-			"id": 1,
-			"source": "test@test.es",
-			"subject": "This is a test.",
-			"body": "Hello.\n\nThis is a test.\n\nGoodbye!"
-		}
+		response = requests.get(
+			f"https://localhost:5000/mail/{id}",
+			headers={
+				'Authorization': f'Bearer {JWT}',
+				#'Api-Key': API_KEY,
+			},
+			verify=False
+		)
+		if response.status_code == 200:
+			mail = response.json()["message"]
 
-		mail_window = self.window.derwin(self.height - 2, self.width - 2, 1, 1)
-		mail_window.erase()
-		mail_window.box()
+			mail_window = self.window.derwin(self.height - 2, self.width - 2, 1, 1)
+			mail_window.erase()
+			mail_window.box()
 
-		textpad.rectangle(mail_window, 2, 1, 4, self.width - 4)
-		mail_window.addstr(2, 2, "Source")
+			textpad.rectangle(mail_window, 2, 1, 4, self.width - 4)
+			mail_window.addstr(2, 2, "From")
 
-		mail_window.addnstr(3, 2, mail["source"], self.width - 4 - 2)
+			mail_window.addnstr(3, 2, mail["source"], self.width - 4 - 2)
 
-		textpad.rectangle(mail_window, 6, 1, 8, self.width - 4)
-		mail_window.addstr(6, 2, "Subject")
+			textpad.rectangle(mail_window, 6, 1, 8, self.width - 4)
+			mail_window.addstr(6, 2, "Subject")
 
-		mail_window.addnstr(7, 2, mail["subject"], self.width - 4 - 2)
+			mail_window.addnstr(7, 2, mail["subject"], self.width - 4 - 2)
 
-		textpad.rectangle(mail_window, 10, 1, self.height - 5, self.width - 4)
-		mail_window.addstr(10, 2, "Body")
-		
-		row = 0
-		col = 0
-		lim_row = self.height - 5 - 10 - 2
-		lim_col =  self.width - 4 - 1 - 2
-		for ch in mail["body"]:
-			if col > lim_col:
-				row += 1
-				col = 0
-			if row > lim_row:
-				break
-			if ch == "\n":
-				row += 1
-				col = 0
-			else:
-				mail_window.addch(row + 11, col + 2, ch)
-				col += 1
+			textpad.rectangle(mail_window, 10, 1, self.height - 5, self.width - 4)
+			mail_window.addstr(10, 2, "Body")
+			
+			row = 0
+			col = 0
+			lim_row = self.height - 5 - 10 - 2
+			lim_col =  self.width - 4 - 1 - 2
+			for ch in mail["body"]:
+				if col > lim_col:
+					row += 1
+					col = 0
+				if row > lim_row:
+					break
+				if ch == "\n":
+					row += 1
+					col = 0
+				else:
+					mail_window.addch(row + 11, col + 2, ch)
+					col += 1
 
-		mail_window.refresh()
+			mail_window.refresh()
+		else:
+			self.window.attron(curses.color_pair(1))
+			self.window.addstr(int(self.height / 2), int(self.width / 2 - len("An error has ocurred") / 2), "An error has ocurred")
+			self.window.attroff(curses.color_pair(1))
 
 		while True:
 			key = self.stdscr.getch()
@@ -255,7 +262,7 @@ class InboxWindow():
 
 			elif key in [curses.KEY_ENTER, 10, 13]:
 				if self.mail:
-					self.fetch_mail(self.focused)
+					self.fetch_mail(self.mail[self.focused]["id"])
 					self.fetch_mails()
 
 			elif key == 27:		# escape key
@@ -362,7 +369,26 @@ class NewMailWindow():
 					return "Main"
 
 				elif key in [curses.KEY_ENTER, 10, 13]:
-					pass # SEND MAIL
+					response = requests.post(
+						"https://localhost:5000/mail",
+						headers={
+							'Authorization': f'Bearer {JWT}',
+							#'Api-Key': API_KEY,
+						},
+						json={
+							"receiver": self.data[0],
+							"subject": self.data[1],
+							"body": self.data[2]
+						},
+						verify=False
+					)
+					if response.status_code == 201:
+						pass
+					else:
+						self.window.attron(curses.color_pair(1))
+						error_msg = response.json()["message"]
+						self.window.addstr(self.height - 4, 2, f"{error_msg}{" " * (self.width - 4 - len(error_msg))}")
+						self.window.attroff(curses.color_pair(1))
 
 	def _draw_styled_text_box(self, label, y, x, height, width, is_focused):
 		if not is_focused:
@@ -409,7 +435,7 @@ class NewMailWindow():
 		self.window.refresh()
 
 	def change_focus(self, index):
-		self._draw_styled_text_box("Destination", 2, 1, 2, self.width - 3, index == 0)
+		self._draw_styled_text_box("To", 2, 1, 2, self.width - 3, index == 0)
 		self._draw_styled_text_box("Subject", 6, 1, 2, self.width - 3, index == 1)
 		self._draw_styled_text_box("Body", 10, 1, self.height - 15, self.width - 3, index == 2)
 
@@ -555,7 +581,28 @@ class OptionsWindow():
 						return
 
 					elif key in [curses.KEY_ENTER, 10, 13]:
-						pass # CHANGE PASSWORD
+						response = requests.put(
+							"https://localhost:5000/change-pass",
+							headers={
+								'Authorization': f'Bearer {JWT}',
+								#'Api-Key': API_KEY,
+							},
+							json={
+								"old_password": self.data[0],
+								"new_password": self.data[1]
+							},
+							verify=False
+						)
+						if response.status_code == 200:
+							return
+						else:
+							self.window.attron(curses.color_pair(1))
+							error_msg = response.json()["message"]
+							if type(error_msg) == dict:
+								error_msg = list(response.json()["message"].values())[0][0]
+							self.window.addstr(9, 2, f"{error_msg}{" "* (self.width - 4 - len(error_msg))}")
+							self.window.attroff(curses.color_pair(1))
+
 
 		def _validate_enter(self, ch):
 			if ch == curses.KEY_UP:
@@ -643,7 +690,25 @@ class OptionsWindow():
 						return False
 
 					elif key in [curses.KEY_ENTER, 10, 13]:
-						pass # DELETE
+						response = requests.delete(
+							"https://localhost:5000/del-account",
+							headers={
+								'Authorization': f'Bearer {JWT}',
+								#'Api-Key': API_KEY,
+							},
+							json={
+								"password": password,
+							},
+							verify=False
+						)
+						if response.status_code == 200:
+							return True
+						else:
+							self.window.attron(curses.color_pair(1))
+							error_msg = response.json()["message"]
+							self.window.addstr(5, 2, f"{error_msg}{" "* (self.width - 4 - len(error_msg))}")
+							self.window.attroff(curses.color_pair(1))
+
 
 		def _validate_enter(self, ch):
 			if ch == curses.KEY_DOWN:

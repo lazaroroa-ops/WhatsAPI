@@ -50,7 +50,7 @@ class LoginWindow():
 							verify=False
 						)
 						if response.status_code == 200:
-							return "Main", response.json()["access_token"]
+							return "Main", response.json()["access_token"], response.json()["api_key"]
 						else:
 							self.window.attron(curses.color_pair(1))
 							error_msg = response.json()["error"]
@@ -58,10 +58,10 @@ class LoginWindow():
 							self.window.attroff(curses.color_pair(1))
 
 					elif self.focused == 3:
-						return "Register", None
+						return "Register", None, None
 					
 					elif self.focused == 4:
-						return "Exit", None
+						return "Exit", None, None
 
 				if key == curses.KEY_DOWN:
 					self.focused = min(self.focused + 1, 4)

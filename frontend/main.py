@@ -11,6 +11,7 @@ os.environ.setdefault('ESCDELAY', '25')
 
 def main(stdscr):
 	JWT = None
+	API_KEY = None
 	curses.use_default_colors()
 	curses.init_pair(1, curses.COLOR_RED, -1)
 	curses.curs_set(0)
@@ -26,12 +27,12 @@ def main(stdscr):
 
 		if code == "Login":
 			active_win = LoginWindow(stdscr)
-			code, JWT = active_win.loop()
+			code, JWT, API_KEY = active_win.loop()
 		elif code == "Register":
 			active_win = RegisterWindow(stdscr)
-			code, JWT = active_win.loop()
+			code, JWT, API_KEY = active_win.loop()
 		elif code == "Main":
-			active_win = MainWindow(stdscr, JWT)
+			active_win = MainWindow(stdscr, JWT, API_KEY)
 			code = active_win.loop()
 
 		active_win.window.erase()

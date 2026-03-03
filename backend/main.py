@@ -76,7 +76,7 @@ class Register(Resource):
 		db.session.add(new_user)
 		db.session.commit()
 		
-		return {'message': 'User registered successfully.', 'api_key': api_key}, HTTPStatus.CREATED
+		return {'message': 'User registered successfully.'}, HTTPStatus.CREATED
 
 
 class Login(Resource):
