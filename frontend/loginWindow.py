@@ -6,8 +6,8 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 
 class LoginWindow():
 	def __init__(self, stdscr):
-		self.main_win = stdscr
-		parent_height, parent_width = self.main_win.getmaxyx()
+		self.stdscr = stdscr
+		parent_height, parent_width = self.stdscr.getmaxyx()
 		self.height, self.width = 19, 60
 		self.window = curses.newwin(self.height, self.width, int(parent_height / 2 - self.height / 2), int(parent_width / 2 - self.width / 2))
 		self.window.box()
@@ -38,7 +38,7 @@ class LoginWindow():
 
 				self.data[aux_focus] = str(message).strip()
 			else:
-				key = self.main_win.getch()
+				key = self.stdscr.getch()
 				if key in [curses.KEY_ENTER, 10, 13]:
 					if self.focused == 2:
 						response = requests.post(
@@ -50,7 +50,7 @@ class LoginWindow():
 							verify=False
 						)
 						if response.status_code == 200:
-							return "", response.json()["access_token"]
+							return "Main", response.json()["access_token"]
 						else:
 							self.window.attron(curses.color_pair(1))
 							error_msg = response.json()["error"]
