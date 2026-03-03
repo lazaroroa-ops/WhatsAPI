@@ -76,7 +76,7 @@ class MessageDetailResource(Resource):
         if not message:
             return {"message": "Message not found"}, 404
             
-        # Allow deletion by sender, receiver, or admin
+        
         if user.id not in [message.sender_id, message.receiver_id] and user.role != 'admin':
             return {"message": "Not authorized to delete this message"}, 403
             
