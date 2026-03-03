@@ -10,7 +10,7 @@ from http import HTTPStatus
 import os
 import ssl
 
-from models import db, User
+from models import db, User, Message
 
 app = Flask(__name__)
 #api = Api(app)
