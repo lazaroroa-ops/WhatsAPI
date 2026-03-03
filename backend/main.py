@@ -10,6 +10,8 @@ from http import HTTPStatus
 import os
 import ssl
 
+from models import db, User
+
 app = Flask(__name__)
 #api = Api(app)
 
@@ -19,22 +21,15 @@ key_path = os.path.join(base_dir, 'server.key')
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jwtdatabase.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'jwtdatabase.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'super-secret'  # Cambia esto por una clave secreta segura en producción
 
-db = init_app(app)
+db.init_app(app)
 jwt = JWTManager(app)
 api = Api(app)
 
-class User(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(80), unique=True, nullable=False)
-	password = db.Column(db.String(120), nullable=False)
-
-	def __repr__(self):
-		return f'<User {self.username}>'
-
-
+# Se ha pasado a modelo el user
 ### USER REGISTER VALIDATION ###
 
 def validate_complexity(password):
