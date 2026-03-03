@@ -10,27 +10,31 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     role = db.Column(db.String(20), default='user')
-    #Api key ??
+    api_key = db.Column(db.String(64), unique=True, nullable=True)
 
     def __repr__(self):
         return f'<User {self.username}>'
 
 
-class Message(db.Model):
+class Mail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    content = db.Column(db.Text, nullable=False)
+    subject = db.Column(db.String(200), nullable=False)
+    body = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_messages')
-    receiver = db.relationship('User', foreign_keys=[receiver_id], backref='received_messages')
+    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_mails')
+    receiver = db.relationship('User', foreign_keys=[receiver_id], backref='received_mails')
 
-    def to_dict(self):
-        return {
+    def to_dict(self, include_body=False):
+        res = {
             'id': self.id,
-            'sender': self.sender.username,
+            'source': self.sender.username,
             'receiver': self.receiver.username,
-            'content': self.content,
+            'subject': self.subject,
             'timestamp': self.timestamp.isoformat()
         }
+        if include_body:
+            res['body'] = self.body
+        return res

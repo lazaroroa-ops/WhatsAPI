@@ -9,9 +9,11 @@ from http import HTTPStatus
 
 import os
 import ssl
+import uuid
+import hashlib
 
-from models import db, User, Message
-from resources import MessageResource,MessageDetailResource, ChangePassResource, DeleteAccountResource
+from models import db, User, Mail
+from resources import MailResource, MailDetailResource, ChangePassResource, DeleteAccountResource
 
 app = Flask(__name__)
 
@@ -67,13 +69,14 @@ class Register(Resource):
 			return {'error': {'username': 'Username already exists.'}}, HTTPStatus.BAD_REQUEST
 
 		role = 'admin' if User.query.count() == 0 else 'user'
+		api_key = hashlib.sha256(str(uuid.uuid4()).encode()).hexdigest()
 		
 		hashed_password = generate_password_hash(password)
-		new_user = User(username=username, password=hashed_password, role=role)
+		new_user = User(username=username, password=hashed_password, role=role, api_key=api_key)
 		db.session.add(new_user)
 		db.session.commit()
 		
-		return {'message': 'User registered successfully.'}, HTTPStatus.CREATED
+		return {'message': 'User registered successfully.', 'api_key': api_key}, HTTPStatus.CREATED
 
 
 class Login(Resource):
@@ -89,15 +92,33 @@ class Login(Resource):
 		if not user or not check_password_hash(user.password, password):
 			return {'error': 'Invalid username or password.'}, HTTPStatus.UNAUTHORIZED
 		
-		return {'access_token': create_access_token(identity=username)}, HTTPStatus.OK
+		return {'access_token': create_access_token(identity=username), 'api_key': user.api_key}, HTTPStatus.OK
 
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
-api.add_resource(MessageResource, '/messages')
-api.add_resource(MessageDetailResource, '/messages/<int:message_id>')
+api.add_resource(MailResource, '/mail')
+api.add_resource(MailDetailResource, '/mail/<int:mail_id>')
 api.add_resource(ChangePassResource, '/change-pass')
 api.add_resource(DeleteAccountResource, '/del-account')
+
+@app.after_request
+def add_security_headers(response):
+    #CORS
+    origin = request.headers.get('Origin')
+    if origin in ['https://localhost:5000', 'http://localhost:5000']:
+        response.headers['Access-Control-Allow-Origin'] = origin
+    
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,X-API-KEY'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
+    
+    #Headers
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    return response
 
 
 if __name__ == '__main__':
