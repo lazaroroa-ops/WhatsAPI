@@ -108,6 +108,24 @@ api.add_resource(MailDetailResource, '/mail/<int:mail_id>')
 
 api.add_resource(ProtectedResource, '/protected')
 
+@app.after_request
+def add_security_headers(response):
+    #CORS
+    origin = request.headers.get('Origin')
+    if origin in ['https://localhost:5000', 'http://localhost:5000']:
+        response.headers['Access-Control-Allow-Origin'] = origin
+    
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,X-API-KEY'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
+    
+    #Headers
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    return response
+
 
 if __name__ == '__main__':
 	with app.app_context():
