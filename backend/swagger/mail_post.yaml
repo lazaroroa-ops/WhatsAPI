@@ -1,0 +1,29 @@
+Send a new mail
+---
+tags:
+  - Mail
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required: [receiver, subject, body]
+      properties:
+        receiver:
+          type: string
+          format: email
+        subject:
+          type: string
+        body:
+          type: string
+responses:
+  201:
+    description: Mail sent successfully
+  400:
+    description: Missing fields
+  404:
+    description: Receiver not found

@@ -1,0 +1,26 @@
+Change user password
+---
+tags:
+  - User Management
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required: [old_password, new_password]
+      properties:
+        old_password:
+          type: string
+        new_password:
+          type: string
+responses:
+  200:
+    description: Password updated
+  400:
+    description: Missing fields or invalid complexity
+  401:
+    description: Invalid old password

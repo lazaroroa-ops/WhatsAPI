@@ -6,6 +6,7 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from marshmallow import Schema, fields, validate, ValidationError
 from http import HTTPStatus
+from flasgger import Swagger
 
 import os
 import ssl
@@ -17,6 +18,7 @@ from models import db, User, Mail
 from resources import MailResource, MailDetailResource, ChangePassResource, DeleteAccountResource
 
 app = Flask(__name__)
+swagger = Swagger(app)
 
 CORS(
 	app,
@@ -73,6 +75,9 @@ user_schema = UserSchema()
 
 class Register(Resource):
 	def post(self):
+		"""
+		file: /swagger/register_post.yaml
+		"""
 		if request.content_type != 'application/json':
 			return {"error": "Content must be in JSON format"}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
 		
@@ -102,6 +107,9 @@ class Register(Resource):
 
 class Login(Resource):
 	def post(self):
+		"""
+		file: /swagger/login_post.yaml
+		"""
 		if request.content_type != 'application/json':
 			return {"error": "Content must be in JSON format"}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
 
