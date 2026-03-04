@@ -2,6 +2,8 @@ from flask import request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import db, User, Mail
+from http import HTTPStatus
+from flasgger import swag_from
 
 from marshmallow import Schema, fields, validate, ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -39,6 +41,7 @@ def validate_api_key():
 
 class ChangePassResource(Resource):
 	@jwt_required()
+	@swag_from('swagger/change_pass_put.yaml')
 	def put(self):
 		valid, auth_user_or_err, code = validate_api_key()
 		if not valid:
@@ -73,6 +76,7 @@ class ChangePassResource(Resource):
 
 class DeleteAccountResource(Resource):
 	@jwt_required()
+	@swag_from('swagger/del_account_delete.yaml')
 	def delete(self):
 		valid, auth_user_or_err, code = validate_api_key()
 		if not valid:
@@ -101,6 +105,7 @@ class DeleteAccountResource(Resource):
 
 class MailResource(Resource):
 	@jwt_required()
+	@swag_from('swagger/mail_post.yaml')
 	def post(self):
 		valid, auth_user_or_err, code = validate_api_key()
 		if not valid:
@@ -131,6 +136,7 @@ class MailResource(Resource):
 		return {"message": "Mail sent successfully"}, 201
 
 	@jwt_required()
+	@swag_from('swagger/mail_get.yaml')
 	def get(self):
 		valid, auth_user_or_err, code = validate_api_key()
 		if not valid:
@@ -145,6 +151,7 @@ class MailResource(Resource):
 
 class MailDetailResource(Resource):
 	@jwt_required()
+	@swag_from('swagger/mail_detail_get.yaml')
 	def get(self, mail_id):
 		valid, auth_user_or_err, code = validate_api_key()
 		if not valid:
@@ -164,6 +171,7 @@ class MailDetailResource(Resource):
 
 
 	@jwt_required()
+	@swag_from('swagger/mail_detail_delete.yaml')
 	def delete(self, mail_id):
 		valid, auth_user_or_err, code = validate_api_key()
 		if not valid:

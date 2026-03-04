@@ -18,7 +18,7 @@ from models import db, User, Mail
 from resources import MailResource, MailDetailResource, ChangePassResource, DeleteAccountResource
 
 app = Flask(__name__)
-swagger = Swagger(app)
+
 
 CORS(
 	app,
@@ -40,10 +40,44 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jwtdatabase.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'jwtdatabase.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'super-secret'  # Cambia esto por una clave secreta segura en producción
+app.config['SWAGGER'] = {"title": "WhatsAPI, a mail API"}
 
 db.init_app(app)
 jwt = JWTManager(app)
 api = Api(app)
+
+swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": "apispec_1",
+            "route": "/apispec_1.json",
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True,
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/apidocs/",
+    "securityDefinitions": {
+        "bearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "JWT Bearer token. Example: \"Bearer {token}\""
+        },
+        "apiKeyAuth": {
+            "type": "apiKey",
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "API Key for secondary validation."
+        }
+    },
+    "uiversion": 3
+}
+
+swagger = Swagger(app, config=swagger_config)
+
 
 logging.basicConfig(
 	filename='audit.log',
@@ -76,7 +110,7 @@ user_schema = UserSchema()
 class Register(Resource):
 	def post(self):
 		"""
-		file: /swagger/register_post.yaml
+		file: swagger/register_post.yaml
 		"""
 		if request.content_type != 'application/json':
 			return {"error": "Content must be in JSON format"}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
@@ -108,7 +142,7 @@ class Register(Resource):
 class Login(Resource):
 	def post(self):
 		"""
-		file: /swagger/login_post.yaml
+		file: swagger/login_post.yaml
 		"""
 		if request.content_type != 'application/json':
 			return {"error": "Content must be in JSON format"}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
@@ -140,15 +174,28 @@ api.add_resource(ChangePassResource, '/change-pass')
 api.add_resource(DeleteAccountResource, '/del-account')
 
 
+
+
 @app.after_request
 def add_security_headers(response):
-	#Headers
-	response.headers['X-Content-Type-Options'] = 'nosniff'
-	response.headers['X-Frame-Options'] = 'DENY'
-	response.headers['X-XSS-Protection'] = '1; mode=block'
-	response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-	response.headers['Content-Security-Policy'] = "default-src 'self'"
-	return response
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+
+	#PARA QUE FUNCIONE CON LA API
+    if request.path.startswith('/apidocs') or request.path.startswith('/flasgger_static'):
+        response.headers['Content-Security-Policy'] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com; "
+            "img-src 'self' data:;"
+        )
+    else:
+        response.headers['Content-Security-Policy'] = "default-src 'self'"
+
+    return response
 
 
 if __name__ == '__main__':
