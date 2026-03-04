@@ -1,0 +1,12 @@
+Get system statistics
+---
+tags:
+  - Management
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+responses:
+  200:
+    description: System statistics retrieved successfully
+  403:
+    description: Forbidden - Admin role required

@@ -15,7 +15,7 @@ import hashlib
 import logging
 
 from models import db, User, Mail
-from resources import MailResource, MailDetailResource, ChangePassResource, DeleteAccountResource
+from resources import MailResource, MailDetailResource, ChangePassResource, DeleteAccountResource, AdminStatsResource
 
 app = Flask(__name__)
 
@@ -172,7 +172,7 @@ api.add_resource(MailResource, '/mail')
 api.add_resource(MailDetailResource, '/mail/<int:mail_id>')
 api.add_resource(ChangePassResource, '/change-pass')
 api.add_resource(DeleteAccountResource, '/del-account')
-
+api.add_resource(AdminStatsResource, '/admin/stats')
 
 
 

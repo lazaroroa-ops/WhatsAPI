@@ -192,3 +192,20 @@ class MailDetailResource(Resource):
 		db.session.commit()
 		
 		return {"message": "Mail deleted successfully"}, 200
+
+class AdminStatsResource(Resource):
+	@jwt_required()
+	@swag_from('swagger/admin_stats_get.yaml')
+	def get(self):
+		valid, auth_user_or_err, code = validate_api_key()
+		if not valid:
+			return auth_user_or_err, code
+
+		if auth_user_or_err.role !='admin':
+			return {"message": "Administrator access required"}, 403
+		
+		stats = {
+			"total_users": User.query.count(),
+			"total_mails": Mail.query.count()
+		}
+		return {"message": stats}, 200
