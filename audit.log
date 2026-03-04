@@ -1,0 +1,180 @@
+2026-03-04 15:53:19,375 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 15:53:19,375 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 15:53:19,376 INFO:  * Restarting with stat
+2026-03-04 15:53:19,930 WARNING:  * Debugger is active!
+2026-03-04 15:53:19,935 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:08:21,993 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 16:08:21,993 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 16:08:21,994 INFO:  * Restarting with stat
+2026-03-04 16:08:22,556 WARNING:  * Debugger is active!
+2026-03-04 16:08:22,561 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:08:30,586 INFO: 127.0.0.1 - - [04/Mar/2026 16:08:30] "POST /login HTTP/1.1" 200 -
+2026-03-04 16:08:35,622 INFO: 127.0.0.1 - - [04/Mar/2026 16:08:35] "GET /mail HTTP/1.1" 200 -
+2026-03-04 16:11:18,294 INFO: 127.0.0.1 - - [04/Mar/2026 16:11:18] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-04 16:11:23,829 INFO: 127.0.0.1 - - [04/Mar/2026 16:11:23] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-04 16:11:25,294 INFO: 127.0.0.1 - - [04/Mar/2026 16:11:25] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-04 16:25:50,771 INFO: 127.0.0.1 - - [04/Mar/2026 16:25:50] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-04 16:25:50,959 INFO: 127.0.0.1 - - [04/Mar/2026 16:25:50] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-04 16:26:19,827 INFO: 127.0.0.1 - - [04/Mar/2026 16:26:19] "[31m[1mGET /register HTTP/1.1[0m" 405 -
+2026-03-04 16:26:38,995 INFO: 127.0.0.1 - - [04/Mar/2026 16:26:38] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2026-03-04 16:28:51,102 INFO: 127.0.0.1 - - [04/Mar/2026 16:28:51] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-04 16:28:51,207 INFO: 127.0.0.1 - - [04/Mar/2026 16:28:51] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-04 16:30:50,778 INFO: 127.0.0.1 - - [04/Mar/2026 16:30:50] "POST /login HTTP/1.1" 200 -
+2026-03-04 16:33:54,523 INFO: 127.0.0.1 - - [04/Mar/2026 16:33:54] "POST /login HTTP/1.1" 200 -
+2026-03-04 16:33:54,617 INFO: 127.0.0.1 - - [04/Mar/2026 16:33:54] "GET /mail HTTP/1.1" 200 -
+2026-03-04 16:58:10,854 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 16:58:10,854 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 16:58:10,855 INFO:  * Restarting with stat
+2026-03-04 16:58:11,517 WARNING:  * Debugger is active!
+2026-03-04 16:58:11,529 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:58:28,690 INFO: 127.0.0.1 - - [04/Mar/2026 16:58:28] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2026-03-04 16:59:14,139 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 16:59:14,295 INFO:  * Restarting with stat
+2026-03-04 16:59:14,926 WARNING:  * Debugger is active!
+2026-03-04 16:59:14,931 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:59:19,985 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 16:59:20,248 INFO:  * Restarting with stat
+2026-03-04 16:59:20,918 WARNING:  * Debugger is active!
+2026-03-04 16:59:20,923 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:59:44,130 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 16:59:44,427 INFO:  * Restarting with stat
+2026-03-04 16:59:45,088 WARNING:  * Debugger is active!
+2026-03-04 16:59:45,093 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:59:52,349 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 16:59:52,349 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 16:59:52,351 INFO:  * Restarting with stat
+2026-03-04 16:59:53,042 WARNING:  * Debugger is active!
+2026-03-04 16:59:53,052 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 16:59:59,551 INFO: 127.0.0.1 - - [04/Mar/2026 16:59:59] "POST /login HTTP/1.1" 200 -
+2026-03-04 17:00:00,027 INFO: 127.0.0.1 - - [04/Mar/2026 17:00:00] "GET /mail HTTP/1.1" 200 -
+2026-03-04 17:00:07,159 INFO: 127.0.0.1 - - [04/Mar/2026 17:00:07] "DELETE /del-account HTTP/1.1" 200 -
+2026-03-04 17:00:54,588 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:00:54,826 INFO:  * Restarting with stat
+2026-03-04 17:00:55,527 WARNING:  * Debugger is active!
+2026-03-04 17:00:55,532 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:01:07,652 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:01:07,897 INFO:  * Restarting with stat
+2026-03-04 17:01:08,523 WARNING:  * Debugger is active!
+2026-03-04 17:01:08,528 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:01:22,672 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:01:22,822 INFO:  * Restarting with stat
+2026-03-04 17:01:23,426 WARNING:  * Debugger is active!
+2026-03-04 17:01:23,430 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:01:32,521 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:01:32,675 INFO:  * Restarting with stat
+2026-03-04 17:01:33,302 WARNING:  * Debugger is active!
+2026-03-04 17:01:33,307 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:01:42,395 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:01:42,691 INFO:  * Restarting with stat
+2026-03-04 17:01:43,313 WARNING:  * Debugger is active!
+2026-03-04 17:01:43,317 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:01:51,398 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:01:51,566 INFO:  * Restarting with stat
+2026-03-04 17:01:52,195 WARNING:  * Debugger is active!
+2026-03-04 17:01:52,199 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:00,284 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:00,511 INFO:  * Restarting with stat
+2026-03-04 17:02:01,199 WARNING:  * Debugger is active!
+2026-03-04 17:02:01,204 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:14,324 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:14,601 INFO:  * Restarting with stat
+2026-03-04 17:02:15,255 WARNING:  * Debugger is active!
+2026-03-04 17:02:15,258 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:25,360 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:25,637 INFO:  * Restarting with stat
+2026-03-04 17:02:26,327 WARNING:  * Debugger is active!
+2026-03-04 17:02:26,331 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:27,355 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:27,610 INFO:  * Restarting with stat
+2026-03-04 17:02:28,322 WARNING:  * Debugger is active!
+2026-03-04 17:02:28,326 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:29,345 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:29,594 INFO:  * Restarting with stat
+2026-03-04 17:02:30,215 WARNING:  * Debugger is active!
+2026-03-04 17:02:30,219 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:31,241 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:31,448 INFO:  * Restarting with stat
+2026-03-04 17:02:32,156 WARNING:  * Debugger is active!
+2026-03-04 17:02:32,160 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:32,175 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:32,318 INFO:  * Restarting with stat
+2026-03-04 17:02:32,947 WARNING:  * Debugger is active!
+2026-03-04 17:02:32,951 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:38,004 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:38,256 INFO:  * Restarting with stat
+2026-03-04 17:02:38,921 WARNING:  * Debugger is active!
+2026-03-04 17:02:38,926 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:02:51,039 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/resources.py', reloading
+2026-03-04 17:02:51,251 INFO:  * Restarting with stat
+2026-03-04 17:02:51,934 WARNING:  * Debugger is active!
+2026-03-04 17:02:51,937 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:03:02,156 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 17:03:02,156 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 17:03:02,157 INFO:  * Restarting with stat
+2026-03-04 17:03:02,814 WARNING:  * Debugger is active!
+2026-03-04 17:03:02,820 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:04:30,270 INFO: 127.0.0.1 - - [04/Mar/2026 17:04:30] "GET /apidocs/ HTTP/1.1" 200 -
+2026-03-04 17:04:30,334 INFO: 127.0.0.1 - - [04/Mar/2026 17:04:30] "GET /flasgger_static/swagger-ui.css HTTP/1.1" 200 -
+2026-03-04 17:04:30,338 INFO: 127.0.0.1 - - [04/Mar/2026 17:04:30] "GET /flasgger_static/swagger-ui-bundle.js HTTP/1.1" 200 -
+2026-03-04 17:04:30,350 INFO: 127.0.0.1 - - [04/Mar/2026 17:04:30] "GET /flasgger_static/lib/jquery.min.js HTTP/1.1" 200 -
+2026-03-04 17:04:30,355 INFO: 127.0.0.1 - - [04/Mar/2026 17:04:30] "GET /flasgger_static/swagger-ui-standalone-preset.js HTTP/1.1" 200 -
+2026-03-04 17:04:30,650 INFO: 127.0.0.1 - - [04/Mar/2026 17:04:30] "GET /flasgger_static/favicon-32x32.png HTTP/1.1" 200 -
+2026-03-04 17:05:17,986 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:05:18,247 INFO:  * Restarting with stat
+2026-03-04 17:05:18,894 WARNING:  * Debugger is active!
+2026-03-04 17:05:18,898 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:05:28,494 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 17:05:28,494 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 17:05:28,495 INFO:  * Restarting with stat
+2026-03-04 17:05:29,164 WARNING:  * Debugger is active!
+2026-03-04 17:05:29,169 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:05:31,780 INFO: 127.0.0.1 - - [04/Mar/2026 17:05:31] "GET /apidocs/ HTTP/1.1" 200 -
+2026-03-04 17:05:31,849 INFO: 127.0.0.1 - - [04/Mar/2026 17:05:31] "[36mGET /flasgger_static/swagger-ui.css HTTP/1.1[0m" 304 -
+2026-03-04 17:05:31,851 INFO: 127.0.0.1 - - [04/Mar/2026 17:05:31] "[36mGET /flasgger_static/swagger-ui-bundle.js HTTP/1.1[0m" 304 -
+2026-03-04 17:05:31,858 INFO: 127.0.0.1 - - [04/Mar/2026 17:05:31] "[36mGET /flasgger_static/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 -
+2026-03-04 17:05:31,865 INFO: 127.0.0.1 - - [04/Mar/2026 17:05:31] "[36mGET /flasgger_static/lib/jquery.min.js HTTP/1.1[0m" 304 -
+2026-03-04 17:13:47,213 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 17:13:47,213 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 17:13:47,214 INFO:  * Restarting with stat
+2026-03-04 17:13:47,790 WARNING:  * Debugger is active!
+2026-03-04 17:13:47,795 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:13:58,460 INFO: 127.0.0.1 - - [04/Mar/2026 17:13:58] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2026-03-04 17:14:47,254 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:14:47,466 INFO:  * Restarting with stat
+2026-03-04 17:15:53,020 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on https://127.0.0.1:5000
+2026-03-04 17:15:53,020 INFO: [33mPress CTRL+C to quit[0m
+2026-03-04 17:15:53,021 INFO:  * Restarting with stat
+2026-03-04 17:15:53,604 WARNING:  * Debugger is active!
+2026-03-04 17:15:53,609 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:16:02,042 WARNING: Failed login attempt, username does not exist
+2026-03-04 17:16:02,043 INFO: 127.0.0.1 - - [04/Mar/2026 17:16:02] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2026-03-04 17:16:15,621 INFO: New user registered: prueba@prueba.es
+2026-03-04 17:16:15,622 INFO: 127.0.0.1 - - [04/Mar/2026 17:16:15] "[35m[1mPOST /register HTTP/1.1[0m" 201 -
+2026-03-04 17:16:15,830 INFO: 127.0.0.1 - - [04/Mar/2026 17:16:15] "POST /login HTTP/1.1" 200 -
+2026-03-04 17:16:17,997 INFO: 127.0.0.1 - - [04/Mar/2026 17:16:17] "GET /mail HTTP/1.1" 200 -
+2026-03-04 17:40:56,433 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:40:56,668 INFO:  * Restarting with stat
+2026-03-04 17:40:57,251 WARNING:  * Debugger is active!
+2026-03-04 17:40:57,258 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:40:58,277 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:40:58,491 INFO:  * Restarting with stat
+2026-03-04 17:40:59,044 WARNING:  * Debugger is active!
+2026-03-04 17:40:59,049 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:52:20,147 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:52:20,370 INFO:  * Restarting with stat
+2026-03-04 17:52:20,942 WARNING:  * Debugger is active!
+2026-03-04 17:52:20,947 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:52:23,978 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:52:24,201 INFO:  * Restarting with stat
+2026-03-04 17:52:24,789 WARNING:  * Debugger is active!
+2026-03-04 17:52:24,794 INFO:  * Debugger PIN: 605-909-890
+2026-03-04 17:52:32,862 INFO:  * Detected change in '/home/alberto/Universidad/SSD/WhatsAPI/backend/main.py', reloading
+2026-03-04 17:52:33,087 INFO:  * Restarting with stat

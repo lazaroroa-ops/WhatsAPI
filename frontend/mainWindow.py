@@ -153,7 +153,7 @@ class InboxWindow():
 			"https://localhost:5000/mail",
 			headers={
 				'Authorization': f'Bearer {JWT}',
-				#'Api-Key': API_KEY,
+				'X-API-KEY': API_KEY,
 			},
 			verify=False
 		)
@@ -176,11 +176,12 @@ class InboxWindow():
 			else:
 				self.window.addstr(int(self.height / 2), int(self.width / 2 - len("Wow, such empty") / 2), "Wow, such empty")
 			
-			self.window.refresh()
 		else:
 			self.window.attron(curses.color_pair(1))
 			self.window.addstr(int(self.height / 2), int(self.width / 2 - len("An error has ocurred") / 2), "An error has ocurred")
 			self.window.attroff(curses.color_pair(1))
+		
+		self.window.refresh()
 
 	def fetch_mail(self, id):
 		# debug
@@ -188,7 +189,7 @@ class InboxWindow():
 			f"https://localhost:5000/mail/{id}",
 			headers={
 				'Authorization': f'Bearer {JWT}',
-				#'Api-Key': API_KEY,
+				'X-API-KEY': API_KEY,
 			},
 			verify=False
 		)
@@ -373,7 +374,7 @@ class NewMailWindow():
 						"https://localhost:5000/mail",
 						headers={
 							'Authorization': f'Bearer {JWT}',
-							#'Api-Key': API_KEY,
+							'X-API-KEY': API_KEY,
 						},
 						json={
 							"receiver": self.data[0],
@@ -585,7 +586,7 @@ class OptionsWindow():
 							"https://localhost:5000/change-pass",
 							headers={
 								'Authorization': f'Bearer {JWT}',
-								#'Api-Key': API_KEY,
+								'X-API-KEY': API_KEY,
 							},
 							json={
 								"old_password": self.data[0],
@@ -694,7 +695,7 @@ class OptionsWindow():
 							"https://localhost:5000/del-account",
 							headers={
 								'Authorization': f'Bearer {JWT}',
-								#'Api-Key': API_KEY,
+								'X-API-KEY': API_KEY,
 							},
 							json={
 								"password": password,

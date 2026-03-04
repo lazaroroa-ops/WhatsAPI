@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from marshmallow import Schema, fields, validate, ValidationError
 from http import HTTPStatus
 
@@ -18,6 +18,16 @@ from resources import MailResource, MailDetailResource, ChangePassResource, Dele
 
 app = Flask(__name__)
 
+CORS(
+	app,
+	resources={
+		r"/*": {
+			"origins": ["https://www.dominio-frontend.com"],
+			"methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+			"allow_headers": ["Content-Type", "Authorization", "X-API-KEY"]
+		}
+	}
+)
 
 base_dir = os.path.abspath(os.path.dirname(__file__))
 cert_path = os.path.join(base_dir, 'server.crt')
@@ -33,20 +43,20 @@ db.init_app(app)
 jwt = JWTManager(app)
 api = Api(app)
 
-# Se ha pasado a modelo el user
 logging.basicConfig(
-    filename='audit.log',
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s: %(message)s'
+	filename='audit.log',
+	level=logging.INFO,
+	format='%(asctime)s %(levelname)s: %(message)s'
 )
+logger = logging.getLogger(__name__)
 
 ### USER REGISTER VALIDATION ###
 
 def validate_complexity(password):
-    if not any(char.isupper() for char in password):
-        raise ValidationError("Password must contain at least one uppercase letter.")
-    if not any(char.isdigit() for char in password):
-        raise ValidationError("Password must contain at least one digit.")
+	if not any(char.isupper() for char in password):
+		raise ValidationError("Password must contain at least one uppercase letter.")
+	if not any(char.isdigit() for char in password):
+		raise ValidationError("Password must contain at least one digit.")
 
 class UserSchema(Schema):
 	username = fields.Email(required=True)
@@ -63,6 +73,9 @@ user_schema = UserSchema()
 
 class Register(Resource):
 	def post(self):
+		if request.content_type != 'application/json':
+			return {"error": "Content must be in JSON format"}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
+		
 		data = request.get_json()
 		username = data.get('username')
 		password = data.get('password')
@@ -83,23 +96,29 @@ class Register(Resource):
 		db.session.add(new_user)
 		db.session.commit()
 
-		logging.info(f"New user registered: {username}")
+		logger.info(f"New user registered: {username}")
 		return {'message': 'User registered successfully.'}, HTTPStatus.CREATED
 
 
 class Login(Resource):
 	def post(self):
+		if request.content_type != 'application/json':
+			return {"error": "Content must be in JSON format"}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
+
 		data = request.get_json()
 		username = data.get('username')
 		password = data.get('password')
 		
 		if not username or not password:
-			logging.warning(f"Failed login attempt, no username or password")
+			logger.warning(f"Failed login attempt, no username or password")
 			return {'error': 'Username and password are required.'}, HTTPStatus.BAD_REQUEST
 		
 		user = User.query.filter_by(username=username).first()
 		if not user or not check_password_hash(user.password, password):
-			logging.warning(f"Failed login attempt for: {user.username}")
+			if not user:
+				logger.warning(f"Failed login attempt, username does not exist")
+			else:
+				logger.warning(f"Failed login attempt for: {user.username}")
 			return {'error': 'Invalid username or password.'}, HTTPStatus.UNAUTHORIZED
 		
 		return {'access_token': create_access_token(identity=username), 'api_key': user.api_key}, HTTPStatus.OK
@@ -112,23 +131,16 @@ api.add_resource(MailDetailResource, '/mail/<int:mail_id>')
 api.add_resource(ChangePassResource, '/change-pass')
 api.add_resource(DeleteAccountResource, '/del-account')
 
+
 @app.after_request
 def add_security_headers(response):
-    #CORS
-    origin = request.headers.get('Origin')
-    if origin in ['https://localhost:5000', 'http://localhost:5000']:
-        response.headers['Access-Control-Allow-Origin'] = origin
-    
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,X-API-KEY'
-    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
-    
-    #Headers
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['X-XSS-Protection'] = '1; mode=block'
-    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    response.headers['Content-Security-Policy'] = "default-src 'self'"
-    return response
+	#Headers
+	response.headers['X-Content-Type-Options'] = 'nosniff'
+	response.headers['X-Frame-Options'] = 'DENY'
+	response.headers['X-XSS-Protection'] = '1; mode=block'
+	response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+	response.headers['Content-Security-Policy'] = "default-src 'self'"
+	return response
 
 
 if __name__ == '__main__':
