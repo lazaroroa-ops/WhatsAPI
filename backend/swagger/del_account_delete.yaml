@@ -1,0 +1,22 @@
+Delete user account
+---
+tags:
+  - User Management
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required: [password]
+      properties:
+        password:
+          type: string
+responses:
+  200:
+    description: Account deleted
+  401:
+    description: Password does not match

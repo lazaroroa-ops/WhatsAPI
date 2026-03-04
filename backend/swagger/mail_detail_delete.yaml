@@ -1,0 +1,19 @@
+Delete a mail
+---
+tags:
+  - Mail
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+parameters:
+  - name: mail_id
+    in: path
+    type: integer
+    required: true
+responses:
+  200:
+    description: Mail deleted
+  403:
+    description: Unauthorized to delete this mail
+  404:
+    description: Mail not found

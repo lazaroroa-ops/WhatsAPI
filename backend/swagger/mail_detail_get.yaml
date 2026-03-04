@@ -1,0 +1,19 @@
+Get mail details (includes body)
+---
+tags:
+  - Mail
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+parameters:
+  - name: mail_id
+    in: path
+    type: integer
+    required: true
+responses:
+  200:
+    description: Detailed mail object
+  403:
+    description: Unauthorized to view this mail
+  404:
+    description: Mail not found

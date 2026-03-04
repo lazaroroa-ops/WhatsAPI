@@ -1,0 +1,30 @@
+Authenticate a user
+---
+tags:
+  - Auth
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: Password123
+responses:
+  200:
+    description: Login successful
+    schema:
+      type: object
+      properties:
+        access_token:
+          type: string
+        api_key:
+          type: string
+  401:
+    description: Invalid credentials

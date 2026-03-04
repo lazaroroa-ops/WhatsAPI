@@ -1,0 +1,29 @@
+List all received mails (Inbox)
+---
+tags:
+  - Mail
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+responses:
+  200:
+    description: A list of mail objects
+    schema:
+      type: object
+      properties:
+        message:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              source:
+                type: string
+              receiver:
+                type: string
+              subject:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
