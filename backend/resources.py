@@ -193,6 +193,7 @@ class MailDetailResource(Resource):
 		
 		return {"message": "Mail deleted successfully"}, 200
 
+
 class AdminStatsResource(Resource):
 	@jwt_required()
 	@swag_from('swagger/admin_stats_get.yaml')

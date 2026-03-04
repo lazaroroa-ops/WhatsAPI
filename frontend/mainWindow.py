@@ -384,7 +384,8 @@ class NewMailWindow():
 						verify=False
 					)
 					if response.status_code == 201:
-						pass
+						self.change_focus(-1)
+						return "Main"
 					else:
 						self.window.attron(curses.color_pair(1))
 						error_msg = response.json()["message"]
