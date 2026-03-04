@@ -143,6 +143,16 @@ def add_security_headers(response):
 	return response
 
 
+@app.errorhandler(404)
+def not_found(error):
+	return {"error": "Resource not found."}, 404
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+	logger.error(f"Internal error: {e}")
+	return {"error": "Something went wrong."}, 500
+
+
 if __name__ == '__main__':
 	with app.app_context():
 		db.create_all()
